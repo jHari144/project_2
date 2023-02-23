@@ -1,0 +1,23 @@
+<h1>user_{{ user_id }}'s Posts</h1>
+{% if id_title %}
+<ul>
+	{% for row in id_title %}
+	<a href="{% url 'cqna:detail' row.0 %}" style="font-weight: 	bold; text-decoration: none; color: black;">
+		 <div style="margin-bottom: 1.5px; border-radius: 5px; border: 1px solid black; width: 1000px; height: 50px; display    : flex; align-items: center; justify-content: center;">
+			 {{ row.1 }}
+			 {# {{ forloop.counter }} #}
+		 </div>
+	</a> 
+	{% endfor %}
+</ul>
+{% else %}
+<p>{{ message }}</p>
+{% endif %}
+
+<a href="{% url 'cqna:search_tag' %}">
+	<button style="position: absolute; top: 30px; right: 60px;">Search</button>
+<a/>
+<a href="{% url 'cqna:user_posts' %}">
+	<button style="position: absolute; top: 60px; right: 60px;">Return to home</button>
+<a/>
+

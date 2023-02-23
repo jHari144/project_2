@@ -1,0 +1,13 @@
+<form method="post">
+	{% csrf_token %}
+	<div style="padding-left: 40px; padding-top: 20px; display: inline-block; vertical-align: top;">
+		<h3>Post Title</h3>
+		{% if message %}<p><strong style="color: red;">{{ message }}</strong></p>{% endif %}
+		<textarea cols="25" rows="1" name="post_title"></textarea><br/>
+		<h3>Write post content below</h3>
+		{% if message %}<p><strong style="color: red;">{{ message }}</strong></p>{% endif %}
+		<textarea cols="35" rows="8" name="post_text"></textarea><br/>
+		<div style="padding-left: 0px; padding-top: 20px;">
+			<input  type="submit" value="post" /> <a href="{% url 'cqna:index' %}"><input type="button" value="cancel"></a></div>
+	</div>
+</form>

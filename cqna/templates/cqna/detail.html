@@ -1,0 +1,35 @@
+<fieldset style="width: 1000px; display: inline-block; vertical-align: top;"> 
+	<legend><h3>{{ post_title }}</h3></legend>
+	<div style="width: 1000px;"><p>{{ body|safe }}</p></div>
+</fieldset>
+<div style="width: 600px; display: inline-block; vertical-align: top; padding-left: 25px;">
+	<h4>Related Tags</h4>
+	{% if tags %}
+	{% for tag in tags %}
+		<span style="border: 1px solid black; white-space: nowrap; padding: 4px;">{{ tag }}</span>
+	{% endfor %}
+	{% endif %}
+</div>
+<div style="padding-top: 10px;">
+	<a href="{% url 'cqna:user_posts' %}"><input type="button" value="Return to Mainpage" style="margin-left: 2px;"></a> 
+	{% if is_owner %}
+	<a href="{% url 'cqna:edit_post' post_id %}"><input type="button" value="Edit post"></a>
+	{% else %}
+	<a href="{% url 'cqna:reply' post_id %}"><input type="button" value="reply" style="margin-right: 2px;"></a>
+	{% endif %}
+</div><br/><br/>
+
+<h2>Replies</h2>
+{% if Replies %}
+{% for row in Replies %}
+<fieldset style="width: 1000px; display: inline-block;">
+	<legend><h3>user_{{ row.0 }}</h3></legend>
+	<div style="width: 1300px;">{{ row.1|safe }}</div>
+</fieldset>
+{% endfor %}
+{% else %}
+No replies Yet!!
+{% endif %}
+{% if is_owner %}
+<a href="{% url 'cqna:delete_post' post_id %}"><button style="position: absolute; top: 30px; right: 60px;">Delete post</button></a>
+{% endif %}

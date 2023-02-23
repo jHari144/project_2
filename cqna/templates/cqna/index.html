@@ -1,0 +1,11 @@
+<form action="{% url 'cqna:index' %}" method="post">
+	{% csrf_token %}
+	<label for="user_id" style="padding-right: 14px;">Enter user_id:</label>
+	<input type="text" id="user_id" name="my_number" required><br/>
+	<label for="my_password">Enter password:</label>
+	<input type="password" id="my_password" name="my_password" required>
+	{% if error_message %}
+		<p style="color: red;">{{ error_message }}</p>
+	{% endif %}
+	<button type="submit">Submit</button>
+</form>

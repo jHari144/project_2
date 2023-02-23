@@ -1,0 +1,19 @@
+<form action="{% url 'cqna:add_tags' %}" method="post">
+	{% csrf_token %}
+	<div style="padding-left: 20px; display: inline-block; vertical-align: top;">
+	<label for="tag" style="padding-right: 14px;">enter tag</label>
+	<input type="text" id="tag" name="tag"><br/>
+	<input type="submit" value="add" name="add">
+	<input type="submit" value="done"name="done">
+	{% if error_message %}
+	<p style="color: red;">{{ error_message }}</p>
+	{% endif %}
+	</div>
+	<div style="width: 400px; padding-left: 20px; display: inline-block; vertical-align: top;"><p>
+	{% if tags %}
+		{% for t in tags %}
+			<span style="border: 1px solid black; white-space: nowrap; padding: 4px;">{{ t }}</span>
+		{% endfor %}
+	{% endif %}
+		</p></div>
+</form>
