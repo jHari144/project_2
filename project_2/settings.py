@@ -78,7 +78,7 @@ WSGI_APPLICATION = "project_2.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "dumdum2",
+        "NAME": "cqadb",
         "USER": "myuser",
         "PASSWORD": "mypass",
         "HOST": "127.0.0.1",

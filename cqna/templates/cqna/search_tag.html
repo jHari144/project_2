@@ -1,7 +1,7 @@
 <form method="post">
 {% csrf_token %}
 <div style="padding-left: 20px; display: inline-block; vertical-actionlign: top;">
-	<label for="tag"post style="padding-right: 14px;">enter tag</formlabel>
+	<label for="tag" style="padding-right: 14px;">enter tag</label>
 		<input type="text" id="tag" name="tag"><br/>
 		<input type="submit" value="add" name="add">
 		<input type="submit" value="done"name="done">
@@ -9,10 +9,10 @@
 		<p style="color: red;">{{ error_message }}</p>
 		{% endif %}
 </div>
-<div style="width: 400px; padding-left: 20px; display: inlineine-block; vertical-align: top;"><p>
+<div style="width: 400px; padding-left: 20px; display: inlineine-block; vertical-align: top;"><p style="line-height: 1.8;">
 	{% if tags %}
 	{% for t in tags %}
-	<span style="border: 1px solid black; white-space: nowrap; paddingg: 4px;">{{ t }}</span>
+	<span style="border: 1px solid black; white-space: nowrap; paddingg: 3px;">{{ t }}</span>
 	{% endfor %}
 	{% endif %}
 	</p></div>

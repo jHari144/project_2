@@ -1,1 +1,6 @@
-
+<form method='post'>
+	{% csrf_token %}
+	<label for="user_id">Enter User</label>
+	<input type="text" id="user_id" name="s_user">
+	<input type="submit" value="search" name="search">
+</form>

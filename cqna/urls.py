@@ -16,4 +16,6 @@ urlpatterns = [
     path('<int:post_id>/delete/', views.delete_post, name='delete_post'),
     path('<int:post_id>/reply/', views.reply, name='reply'),
     path('search_tag/', views.search_tag, name='search_tag'),
+    path('search_user/', views.search_user, name='search_user'),
+    path('search/', views.call_search, name='search'),
 ]

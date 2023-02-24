@@ -9,10 +9,11 @@
 	<p style="color: red;">{{ error_message }}</p>
 	{% endif %}
 	</div>
-	<div style="width: 400px; padding-left: 20px; display: inline-block; vertical-align: top;"><p>
+	<div style="width: 400px; padding-left: 20px; display: inline-block; vertical-align: top;">
+		<p style="line-height: 1.8;">
 	{% if tags %}
 		{% for t in tags %}
-			<span style="border: 1px solid black; white-space: nowrap; padding: 4px;">{{ t }}</span>
+			<span style="border: 1px solid black; white-space: nowrap; padding: 3px;">{{ t }}</span>
 		{% endfor %}
 	{% endif %}
 		</p></div>

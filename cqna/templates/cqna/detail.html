@@ -1,15 +1,18 @@
+<div style="position: absolute; top: 10px; left: 10px;"><p><strong>Owner_id:</strong> {{ u_id }} </p></div><br/><br/>
+
 <fieldset style="width: 1000px; display: inline-block; vertical-align: top;"> 
 	<legend><h3>{{ post_title }}</h3></legend>
 	<div style="width: 1000px;"><p>{{ body|safe }}</p></div>
 </fieldset>
 <div style="width: 600px; display: inline-block; vertical-align: top; padding-left: 25px;">
 	<h4>Related Tags</h4>
+	<p style="line-height: 1.8;">
 	{% if tags %}
 	{% for tag in tags %}
-		<span style="border: 1px solid black; white-space: nowrap; padding: 4px;">{{ tag }}</span>
+		<span style="border: 1px solid black; white-space: nowrap; padding: 3px;">{{ tag }}</span>
 	{% endfor %}
 	{% endif %}
-</div>
+	</p></div>
 <div style="padding-top: 10px;">
 	<a href="{% url 'cqna:user_posts' %}"><input type="button" value="Return to Mainpage" style="margin-left: 2px;"></a> 
 	{% if is_owner %}

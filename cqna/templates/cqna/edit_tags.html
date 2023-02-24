@@ -1,3 +1,12 @@
+	<div style="width: 400px; padding-left: 20px;">
+		<h3>Existing Tags</h3>
+		<p style="line-height: 1.8;">
+		{% if pre_tags %}
+		{% for t in pre_tags %}
+		<span style="border: 1px solid black; white-space: nowrap; padding: 3px;">{{ t }}</span>
+		{% endfor %}
+		{% endif %}
+		</p></div>
 <form method="post">
 	{% csrf_token %}
 	<div style="padding-left: 20px; display: inline-block; vertical-actionlign: top;">
@@ -9,10 +18,12 @@
 			<p style="color: red;">{{ error_message }}</p>
 			{% endif %}
 	</div>
-	<div style="width: 400px; padding-left: 20px; display: inline-block; vertical-align: top;"><p>
+	<div style="width: 400px; padding-left: 20px; display: inline-block; vertical-align: top;">
+		<h3>Chosen Tags</h3>
+		<p style="line-height: 1.8;">
 		{% if tags %}
 		{% for t in tags %}
-		<span style="border: 1px solid black; white-space: nowrap; padding: 4px;">{{ t }}</span>
+		<span style="border: 1px solid black; white-space: nowrap; padding: 3px;">{{ t }}</span>
 		{% endfor %}
 		{% endif %}
 		</p></div>

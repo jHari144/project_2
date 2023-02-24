@@ -136,7 +136,7 @@ def detail(request, post_id):
         for id in r_id_fin:
             Replies.append([id, bod_fin[i]])
             i = i+1
-        context = {'is_owner': is_owner, 'post_title': post_title, 'body': body, 'tags': tags, 'Replies': Replies, 'post_id': post_id}
+        context = {'is_owner': is_owner, 'u_id': owner_id ,'post_title': post_title, 'body': body, 'tags': tags, 'Replies': Replies, 'post_id': post_id}
         return render(request, 'cqna/detail.html', context)
     else:
         context = {}
@@ -334,6 +334,41 @@ def search_tag(request):
         context = {}
         return render(request, 'cqna/index.html', context)
 
+def search_user(request):
+    if request.session.get('logged_in'):
+        if request.method == 'POST':
+            s_user = request.POST.get('s_user')
+            cursor = connection.cursor()
+            cursor.execute(''' select id from posts where owner_user_id = %s and post_type_id = 1 order by creation_date desc''', [s_user])
+            rset_id = cursor.fetchall()
+            rs_id = []
+            for a in rset_id:
+                rs_id.append(a[0])
+
+            cursor.execute(''' select title from posts where owner_user_id = %s and post_type_id = 1 order by creation_date desc ''', [s_user])
+            rset_title = cursor.fetchall()
+            rs_title = []
+            for a in rset_title:
+                rs_title.append(a[0])
+
+            id_title = []
+            i = 0
+            for a in rs_id:
+                id_title.append([a, rs_title[i]])
+                i += 1
+
+            context = {'id_title': id_title}
+
+            return render(request, 'cqna/search_detail.html', context)
+        else:
+            return render(request, 'cqna/search_user.html', {})
+    else:
+        context = {}
+        return render(request, 'cqna/index.html', context)
+
+def call_search(request):
+    return render(request, 'cqna/search.html')
+
 def edit_post(request, post_id):
     if request.session.get('logged_in'):
         cursor = connection.cursor()
@@ -444,7 +479,6 @@ def edit_tags(request, post_id):
     else:
         context = {}
         return render(request, 'cqna/index.html', context)
-
 
 def delete_post(request, post_id):
     if request.session.get('logged_in'):
