@@ -1,25 +1,37 @@
-<h1>user_{{ user_id }}'s Posts</h1>
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'cqna/style.css' %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand&family=Unbounded&display=swap" rel="stylesheet">
+
+<div class="navigator">
+	<a class="navigator a" href="{% url 'cqna:logout' %}">Logout</a>
+	<a class="navigator a" href="{% url 'cqna:search' %}">Search</a>
+</div>
+
+<h1>User-{{ user_id }}'s Posts</h1>
 {% if data %}
+<div class="page">
 <ul>
 	{% for row in data %}
 	 <a href="{% url 'cqna:detail' row.0 %}" style="font-weight: bold; text-decoration: none; color: black; width: 1000px; height: 50px;">
-		<div style="margin-bottom: 1.5px; border-radius: 5px; border: 1px solid black; width: 1000px; height: 50px; display    : flex; align-items: center; justify-content: center;">
+		 <div class="button2" style="margin-bottom: 1.5px; width: 1000px; height: 50px; display : flex; align-items: center; justify-content: center;"> 
 			{{ row.1 }}
 			{# {{ forloop.counter }} #}
-		</div>
-		 </a> 
+		 </div>
+	 </a> 
 	{% endfor %}
 </ul>
+</div>
 {% else %}
 <p>No posts are available.</p>
 {% endif %}
-<a href="{% url 'cqna:create_post' %}">
-	<input type="button" value="create new post" style="margin-left: 40px;">
-	</a>
+<div class="navigatoropp">
+<a class="navigatoropp a" href="{% url 'cqna:create_post' %}">
+	<!-- <button class="button"> -->
+	Create New Post
+<!-- </button>style="margin-left: 40px;"> -->
+	</a></div>
 
-<a href="{% url 'cqna:logout' %}">
-	<button style="position: absolute; top: 30px; right: 60px;">Logout</button>
-</a><br/>
-<a href="{% url 'cqna:search' %}">
-<button style="position: absolute; top: 60px; right: 60px;">Search</button>
-<a/>
+

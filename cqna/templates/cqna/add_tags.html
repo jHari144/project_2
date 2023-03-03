@@ -1,15 +1,27 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'cqna/style.css' %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand&family=Unbounded&display=swap" rel="stylesheet">
+
+<div class="navigator">
+	<a class="navigator a" href="{% url 'cqna:logout' %}">Logout</a>
+	<a class="navigator a" href="{% url 'cqna:search' %}">Search</a>
+</div>
+
 <form action="{% url 'cqna:add_tags' %}" method="post">
 	{% csrf_token %}
-	<div style="padding-left: 20px; display: inline-block; vertical-align: top;">
+	<div class="page"><!-- style="padding-left: 20px; display: inline-block; vertical-align: top;"> -->
 	<label for="tag" style="padding-right: 14px;">enter tag</label>
-	<input type="text" id="tag" name="tag"><br/>
-	<input type="submit" value="add" name="add">
-	<input type="submit" value="done"name="done">
+	<input type="text" id="tag" name="tag"><br/><br/>
+	<input class="button" type="submit" value="add" name="add">
+	<input class="button" type="submit" value="done"name="done">
 	{% if error_message %}
 	<p style="color: red;">{{ error_message }}</p>
 	{% endif %}
 	</div>
-	<div style="width: 400px; padding-left: 20px; display: inline-block; vertical-align: top;">
+	<div class="page">
 		<p style="line-height: 1.8;">
 	{% if tags %}
 		{% for t in tags %}

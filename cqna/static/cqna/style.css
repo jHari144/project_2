@@ -1,0 +1,125 @@
+body{
+    font-family: 'Quicksand', sans-serif;
+    background-color: #fffff4;
+}
+
+h1{
+    font-family: 'Unbounded', cursive;
+    /* text-transform: capitalize; */
+    color:#57110cd0;
+    text-align: center;
+}
+
+h2{
+    font-family: 'Unbounded', cursive;
+    text-transform: capitalize;
+    color:#172121;
+}
+
+h3{
+    font-family: 'Unbounded', cursive;
+    color:#172121;
+}
+p{
+    font-size: 18px;
+    color: #4a4a4a;
+    line-height: 30px;
+}
+
+.button{
+    background-color: rgb(195, 129, 129);
+    color: #172121;
+    padding: 6px 12px;
+    text-align:center;
+    text-transform:capitalize;
+    display:inline-block;
+    /* border-radius: 3px; */
+    border: 2px solid #fffff4;
+    font-size: 15px;
+    transition: width 0.4s height 0.4s font-size 0.4s;
+}
+
+.button:hover{
+    background-color: #ce9421;
+    transition: background-color 0.4s;
+    color:white;
+    font-size: 15px;
+    /* padding: 18px 36px; */
+}
+
+.button2{
+    background-color: white;
+    color:#172121;
+    padding: 20px 48px;
+    text-align: center;
+    text-transform:capitalize;
+    display: inline-block;
+    border-radius: 5px;
+    border:1.5px solid #57110cd0;
+    font-size: 20px;
+    transition: width 0.4s height 0.4s font-size 0.4s;
+}
+
+.button2:hover{
+    background-color: #57110cd0;
+    transition: background-color 0.3s;
+    color:white;
+    width: 110%;
+    height: 110%;
+}
+
+.page{
+    display: flex; 
+    justify-content: center;
+
+}
+
+.navigator{
+    display:inline-block;
+    /* height: 50px; */
+    justify-content: center;
+    /* position: absolute; */
+    /* top: 0px; */
+    /* left: 0; */
+    /* right: 0; */
+    background-color: #e3bd9c;
+}
+
+.navigator a{
+    color:#172121;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    border-radius: 0;
+    font-family:'Quicksand',sans-serif;
+}
+
+.navigator a:hover{
+    background-color:lightcoral;
+    color:white;
+}
+
+.navigatoropp{
+    display: inline-block;
+    width: 122.86px;
+    justify-content: center;
+    position: absolute;
+    top: 4px;
+    /* left: 0; */
+    right: 4px;
+    background-color: #e3bd9c;
+}
+
+.navigatoropp a{
+    color:#172121;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    border-radius: 0;
+    font-family:'Quicksand',sans-serif;
+}
+
+.navigatoropp a:hover{
+    background-color:lightcoral;
+    color:white;
+}

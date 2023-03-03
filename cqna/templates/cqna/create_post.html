@@ -1,3 +1,16 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'cqna/style.css' %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand&family=Unbounded&display=swap" rel="stylesheet">
+
+<div class="navigator">
+	<a class="navigator a" href="{% url 'cqna:logout' %}">Logout</a>
+	<a class="navigator a" href="{% url 'cqna:search' %}">Search</a>
+</div>
+
+<div class="page">
 <form method="post">
 	{% csrf_token %}
 	<div style="padding-left: 40px; padding-top: 20px; display: inline-block; vertical-align: top;">
@@ -11,3 +24,4 @@
 			<input  type="submit" value="post" /> <a href="{% url 'cqna:index' %}"><input type="button" value="cancel"></a></div>
 	</div>
 </form>
+</div>

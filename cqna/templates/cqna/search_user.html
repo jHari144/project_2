@@ -1,6 +1,22 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'cqna/style.css' %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand&family=Unbounded&display=swap" rel="stylesheet">
+
+<div class="navigator">
+	<a class="navigator a" href="{% url 'cqna:user_posts' %}">Home</a>
+	<a class="navigator a" href="{% url 'cqna:logout' %}">Logout</a>
+	<a class="navigator a" href="{% url 'cqna:search' %}">Search</a>
+</div>
+
 <form method='post'>
 	{% csrf_token %}
 	<label for="user_id">Enter User</label>
 	<input type="text" id="user_id" name="s_user">
-	<input type="submit" value="search" name="search">
+	<input class="button" type="submit" value="search" name="search">
+	{% if error_message %}
+	<p style="color: red;">{{ error_message }}</p>
+	{% endif %}
 </form>

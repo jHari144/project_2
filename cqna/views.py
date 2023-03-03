@@ -270,12 +270,7 @@ def search_tag(request):
                             tags.append(tag)
                             request.session['tags'] = []
                             id_title = search_tag_in(tags)
-                            if id_title:
-                                context = {'id_title': id_title}
-                            else:
-                                message= "No posts with such tags"
-                                context = {'message': message}
-                            return render(request, 'cqna/search_detail.html', context)    
+                            return search_detail(request, id_title, 1, tags)
                         elif tag in tags:
                             error_message = 'Tag already chosen'
                             context = {'error_message': error_message, 'tags': tags}
@@ -289,12 +284,7 @@ def search_tag(request):
                         tags = request.session.get('tags')
                         request.session['tags'] = []
                         id_title = search_tag_in(tags)
-                        if id_title:
-                            context = {'id_title': id_title}
-                        else:
-                            message= "No posts with such tags"
-                            context = {'message': message}
-                        return render(request, 'cqna/search_detail.html', context)
+                        return search_detail(request, id_title, 1, tags)
                     except ValueError:
                         context = {}
                 return render(request, 'cqna/search_tag.html', context)
@@ -339,32 +329,60 @@ def search_user(request):
         if request.method == 'POST':
             s_user = request.POST.get('s_user')
             cursor = connection.cursor()
-            cursor.execute(''' select id from posts where owner_user_id = %s and post_type_id = 1 order by creation_date desc''', [s_user])
-            rset_id = cursor.fetchall()
-            rs_id = []
-            for a in rset_id:
-                rs_id.append(a[0])
+            cursor.execute(''' select id from users where id = %s ''', [s_user])
+            id_exist = cursor.fetchall()
+            if id_exist:
+                cursor = connection.cursor()
+                cursor.execute(''' select id from posts where owner_user_id = %s and post_type_id = 1 order by creation_date desc''', [s_user])
+                rset_id = cursor.fetchall()
+                rs_id = []
+                for a in rset_id:
+                    rs_id.append(a[0])
 
-            cursor.execute(''' select title from posts where owner_user_id = %s and post_type_id = 1 order by creation_date desc ''', [s_user])
-            rset_title = cursor.fetchall()
-            rs_title = []
-            for a in rset_title:
-                rs_title.append(a[0])
+                cursor.execute(''' select title from posts where owner_user_id = %s and post_type_id = 1 order by creation_date desc ''', [s_user])
+                rset_title = cursor.fetchall()
+                rs_title = []
+                for a in rset_title:
+                    rs_title.append(a[0])
 
-            id_title = []
-            i = 0
-            for a in rs_id:
-                id_title.append([a, rs_title[i]])
-                i += 1
+                id_title = []
+                i = 0
+                for a in rs_id:
+                    id_title.append([a, rs_title[i]])
+                    i += 1
 
-            context = {'id_title': id_title}
-
-            return render(request, 'cqna/search_detail.html', context)
+                return search_detail(request, id_title, 2, s_user)
+            else:
+                error_message = 'Selected user does not exist!'
+                context = {'error_message': error_message}
+                return render(request, 'cqna/search_user.html', context)
         else:
             return render(request, 'cqna/search_user.html', {})
     else:
         context = {}
         return render(request, 'cqna/index.html', context)
+
+def search_detail(request, id_title, type, q):
+    if id_title:
+        if type == 1:
+            tags = q
+            tag = True
+            context = {'tag': tag, 'tags': tags, 'id_title': id_title}
+        elif type == 2:
+            s_user = q
+            context = {'s_user': s_user, 'id_title': id_title}
+    else:
+        if type == 1:
+            tags = q
+            tag = True
+            message= "No posts with such tags"
+            context = {'message': message, 'tag': tag, 'tags': tags}
+        if type == 2:
+            s_user = q
+            message = "User_{} has no posts yet".format(s_user)
+            context = {'message': message, 's_user': s_user}
+    return render(request, 'cqna/search_detail.html', context)
+
 
 def call_search(request):
     return render(request, 'cqna/search.html')

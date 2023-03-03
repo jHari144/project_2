@@ -17,5 +17,6 @@ urlpatterns = [
     path('<int:post_id>/reply/', views.reply, name='reply'),
     path('search_tag/', views.search_tag, name='search_tag'),
     path('search_user/', views.search_user, name='search_user'),
+    path('search_detail/', views.search_detail, name='search_detail'),
     path('search/', views.call_search, name='search'),
 ]

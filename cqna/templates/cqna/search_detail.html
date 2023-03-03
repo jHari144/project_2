@@ -1,23 +1,39 @@
-<h1>user_{{ user_id }}'s Posts</h1>
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'cqna/style.css' %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand&family=Unbounded&display=swap" rel="stylesheet">
+
+<div class="navigator">
+	<a class="navigator a" href="{% url 'cqna:user_posts' %}">Home</a>
+	<a class="navigator a" href="{% url 'cqna:logout' %}">Logout</a>
+	<a class="navigator a" href="{% url 'cqna:search' %}">Search</a>
+</div>
+
+{% if tag %}
+<h1>Posts with the tags:</h1>
+{% for t in tags %}
+
+<span style="border: 1px solid black; white-space: nowrap; padding: 3px;">{{ t }}</span>
+{% endfor %}
+{% elif s_user %}
+<h1>user_{{ s_user }}'s Posts</h1>
+{% endif %}
+<br/>
 {% if id_title %}
+<div class="page">
 <ul>
 	{% for row in id_title %}
 	<a href="{% url 'cqna:detail' row.0 %}" style="font-weight: 	bold; text-decoration: none; color: black;">
-		 <div style="margin-bottom: 1.5px; border-radius: 5px; border: 1px solid black; width: 1000px; height: 50px; display    : flex; align-items: center; justify-content: center;">
+		<div class="button2" style="margin-bottom: 1.5px; width: 1000px; height: 50px; display : flex; align-items: center; justify-content: center;"> 
 			 {{ row.1 }}
 			 {# {{ forloop.counter }} #}
 		 </div>
 	</a> 
 	{% endfor %}
-</ul>
+</ul></div>
 {% else %}
 <p>{{ message }}</p>
 {% endif %}
-
-<a href="{% url 'cqna:search' %}">
-	<button style="position: absolute; top: 30px; right: 60px;">Search</button>
-<a/>
-<a href="{% url 'cqna:user_posts' %}">
-	<button style="position: absolute; top: 60px; right: 60px;">Return to home</button>
-<a/>
 
