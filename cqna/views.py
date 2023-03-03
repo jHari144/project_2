@@ -2,43 +2,127 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.db import connection, transaction
 from django.utils import timezone
+from django.views.decorators.cache import cache_control
+from django.contrib import messages
 # Create your views here.
 
+# @cache_control(no_cache=True, must_revalidate=True, no_store=True)
+# def index(request):
+#     #post is not recognised POST is correct
+#     if 'login_status' in request.COOKIES and 'UserID' in request.COOKIES:
+#     #  print("fubuki atsuya")
+#         return redirect("cqna:user_posts")
+#     else:
+#         cursor=connection.cursor()
+#         val=(request.POST['num1'])
+#         va=(request.POST['num2'])
+#         rows=[]
+     
+#      #print(len(va)) it is empty thing
+#         try:
+#     #   print("&")
+#             cursor.execute('''select password from users where id=%s'''%(val))
+#             rows=cursor.fetchall()
+#     #   print(rows)
+#             if len(rows)!=0 and ((len(va)==0 and len(rows[0])==0) or (rows[0][0]==va)):
+#     #    print("kalu")
+#                 response= redirect("cqna:user_posts")
+#                 response.set_cookie("UserID",val)
+#                 response.set_cookie("login_status",True)
+#                 request.session['logged_in'] = True
+#                 request.session['user_id'] = val
+#                 return response
+#             else:
+#                 messages.success(request,("Invalid UsedID/password"))
+#                 return HttpResponse(render(request,'hello.html',{}))
+#             cursor.close()
+#         except Exception:
+#             print("*")
+#             messages.success(request,("Invalid UsedID/password"))
+#             return HttpResponse(render(request,'hello.html',{}))
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def index(request):
-    if request.session.get('logged_in'):
-        return redirect('cqna:user_posts')
-    if request.method == 'POST':
-        my_number_str = request.POST.get('my_number', '').strip()
-        my_password = request.POST.get('my_password', '').strip()
-        if not my_number_str:
-            error_message = 'Please enter user_id.'
-        elif not my_password:
-            error_message = 'Please enter a password'
-        else:
-            try:
-                my_number = int(my_number_str)
-                user_id = my_number
-                cursor = connection.cursor()
-                cursor.execute(''' select password from upass where user_id = %s '''%(user_id))
-                pas = cursor.fetchall()
-                cursor.close()
-                if pas:
-                    pas = pas[0][0]
-                    request.session['user_id'] = user_id
-                    if my_password == pas:
-                        request.session['password'] = my_password
-                        request.session['logged_in'] = True
-                        return redirect('cqna:user_posts')
-                    else:
-                        error_message = 'Invalid Password!!'
-                else:
-                    error_message = 'User_id does not exist'
-            except ValueError:
-                error_message = 'Invalid number entered.'
-        context = {'error_message': error_message}
+    if 'login_status' in request.COOKIES and 'UserID' in request.COOKIES:
+    # if request.session.get('logged_in'):
+        # print("kalu")
+        return redirect("cqna:user_posts")
     else:
-        context = {}
-    return render(request, 'cqna/index.html', context)
+        if request.method == 'POST':
+            # print("kalu2")
+            val = request.POST.get('num1')
+            va = request.POST.get('num2')
+            print(val, va)
+            if not val:
+                error_message = 'Please enter user_id.'
+                # print(error_message)
+            elif not va:
+                error_message = 'Please enter a password'
+                # print(error_message)
+            else:
+                try:
+                    cursor = connection.cursor()
+                    cursor.execute('''select password from users where id=%s'''%(val))
+                    pas = cursor.fetchall()
+                    cursor.close()
+                    if pas:
+                        pas = pas[0][0]
+                        print(pas)
+                        request.session['user_id'] = val
+                        response= redirect("cqna:user_posts")
+                        response.set_cookie("UserID",val)
+                        if va == pas:
+                            response.set_cookie("login_status",True)
+                            request.session['logged_in'] = True
+                            return response
+                        else:
+                            error_message = 'Invalid Password!!'
+                    else:
+                        error_message = 'User_id does not exist'
+                except ValueError:
+                    error_message = 'Invalid number entered.'
+            context = {'error_message': error_message}
+        else:
+            # print("kalu3")
+            context = {}
+        return render(request, 'hello.html', context)
+
+
+# def index(request):
+#     if request.session.get('logged_in'):
+#         return redirect('cqna:user_posts')
+#     if request.method == 'POST':
+#         my_number_str = request.POST.get('my_number', '').strip()
+#         my_password = request.POST.get('my_password', '').strip()
+#         if not my_number_str:
+        #     error_message = 'Please enter user_id.'
+        # elif not my_password:
+        #     error_message = 'Please enter a password'
+#         else:
+#             try:
+#                 my_number = int(my_number_str)
+#                 user_id = my_number
+#                 cursor = connection.cursor()
+#                 cursor.execute(''' select password from upass where user_id = %s '''%(user_id))
+#                 pas = cursor.fetchall()
+#                 cursor.close()
+#                 if pas:
+#                     pas = pas[0][0]
+#                     request.session['user_id'] = user_id
+#                     if my_password == pas:
+#                         request.session['password'] = my_password
+#                         request.session['logged_in'] = True
+#                         return redirect('cqna:user_posts')
+#                     else:
+#                         error_message = 'Invalid Password!!'
+#                 else:
+#                     error_message = 'User_id does not exist'
+#             except ValueError:
+#                 error_message = 'Invalid number entered.'
+#         context = {'error_message': error_message}
+#     else:
+#         context = {}
+#     return render(request, 'cqna/index.html', context)
 
 def user_posts(request):
     user_id = request.session.get('user_id')
@@ -70,7 +154,7 @@ def user_posts(request):
 
     else:
         context = {}
-        return render(request, 'cqna/index.html', context)
+        return render(request, 'hello.html', context)
 
 def split_tags_list(tag_string):
     tags = []
@@ -140,7 +224,7 @@ def detail(request, post_id):
         return render(request, 'cqna/detail.html', context)
     else:
         context = {}
-        return render(request, 'cqna/index.html', context)
+        return render(request, 'hello.html', context)
 
 def reply(request, post_id):
     if request.session.get('logged_in'):
@@ -175,7 +259,7 @@ def reply(request, post_id):
             return render(request, 'cqna/reply.html', context)
     else:
         context = {}
-        return render(request, 'cqna/index.html', context)
+        return render(request, 'hello.html', context)
 
 def create_post(request):
     if request.session.get('logged_in'): 
@@ -199,7 +283,7 @@ def create_post(request):
             return render(request, 'cqna/create_post.html')
     else:
         context = {}
-        return render(request, 'cqna/index.html', context)
+        return render(request, 'hello.html', context)
 
 def search_tag_in(tags):
     if len(tags) != 0:
@@ -284,7 +368,12 @@ def search_tag(request):
                         tags = request.session.get('tags')
                         request.session['tags'] = []
                         id_title = search_tag_in(tags)
-                        return search_detail(request, id_title, 1, tags)
+                        if len(id_title) != 0:
+                            return search_detail(request, id_title, 1, tags)
+                        else:
+                            error_message = 'Select tag!'
+                            context = {'error_message': error_message, 'tags': tags}
+                        #return search_detail(request, id_title, 1, tags)
                     except ValueError:
                         context = {}
                 return render(request, 'cqna/search_tag.html', context)
@@ -322,7 +411,7 @@ def search_tag(request):
             return render(request, 'cqna/search_tag.html', context)
     else:
         context = {}
-        return render(request, 'cqna/index.html', context)
+        return render(request, 'hello.html', context)
 
 def search_user(request):
     if request.session.get('logged_in'):
@@ -360,7 +449,7 @@ def search_user(request):
             return render(request, 'cqna/search_user.html', {})
     else:
         context = {}
-        return render(request, 'cqna/index.html', context)
+        return render(request, 'hello.html', context)
 
 def search_detail(request, id_title, type, q):
     if id_title:
@@ -413,7 +502,7 @@ def edit_post(request, post_id):
             return render(request, 'cqna/edit_post.html', context)
     else:
         context = {}
-        return render(request, 'cqna/index.html', context)
+        return render(request, 'hello.html', context)
 
 def edit_tags(request, post_id):
     if request.session.get('logged_in'):
@@ -496,7 +585,7 @@ def edit_tags(request, post_id):
             return render(request, 'cqna/edit_tags.html', context)
     else:
         context = {}
-        return render(request, 'cqna/index.html', context)
+        return render(request, 'hello.html', context)
 
 def delete_post(request, post_id):
     if request.session.get('logged_in'):
@@ -507,7 +596,7 @@ def delete_post(request, post_id):
         return redirect('cqna:user_posts')
     else:
         context = {}
-        return render(request, 'cqna/index.html', context)
+        return render(request, 'hello.html', context)
 
 def add_tags(request):
     if request.session.get('logged_in'):
@@ -585,7 +674,7 @@ def add_tags(request):
             return render(request, 'cqna/add_tags.html', context)
     else:
         context = {}
-        return render(request, 'cqna/index.html', context)
+        return render(request, 'hello.html', context)
 
 
 def logout(request):
@@ -593,4 +682,7 @@ def logout(request):
     request.session['user_id'] = None
     request.session['logged_in'] = False
     request.session['tags'] = []
-    return redirect('cqna:user_posts')
+    response=redirect('cqna:user_posts')
+    response.delete_cookie('UserID')
+    response.delete_cookie('login_status')
+    return response

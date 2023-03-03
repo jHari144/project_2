@@ -1,3 +1,16 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'cqna/style.css' %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand&family=Unbounded&display=swap" rel="stylesheet">
+
+<div class="navigator">
+	<a class="navigator a" href="{% url 'cqna:logout' %}">Logout</a>
+	<a class="navigator a" href="{% url 'cqna:search' %}">Search</a>
+</div>
+<br/><br/>
+
 <fieldset style="width: 1000px; display: inline-block; vertical-align: top;"> 
 <legend><h3>{{ post_title }}</h3></legend>
 <div style="width: 1000px;"><p>{{ body|safe }}</p></div>
@@ -18,6 +31,6 @@
 	{% if message %} <p><strong style="color: red;">{{ message }}<strong></p> 
 	{% endif %}
 	<textarea cols="100" rows="5" name="reply_text"></textarea><br/fieldset>
-	<input type="submit" value="reply"/>
-	<a href="{% url 'cqna:detail' post_id %}"><input type="button" value="cancel"></a>
+	<input class="button" type="submit" value="reply"/>
+	<a href="{% url 'cqna:detail' post_id %}"><input class="button" type="button" value="cancel"></a>
 </form>

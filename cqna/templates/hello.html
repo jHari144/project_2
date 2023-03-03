@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'cqna/style.css' %}"/>
+        <link rel="icon" href="{% static 'cqna/maxresdefault.jpg' %}">
+    </head>
+    <body>
+        <img src="{%static 'cqna/maxresdefault.jpg'%}" width="700" height="300"/>
+       <div class="container">
+        <div class="login-box">
+            <form class="login" action="{% url 'cqna:index' %}" method='POST' >
+                {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" placeholder="UserID" name="num1" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="password" name="num2" class="form-control">
+                    </div>
+                    <button type="submit" class="full btn">
+                        Login
+                    </button>
+                    <div class="form-group">
+                        <p> Don't have an account? <a href="register"> SignUp</a></p>
+                    </div>
+                    <!-- formaction="http://localhost:8000/home" -->
+            </form>
+            <p>
+                {% if error_message %}
+                 <!-- {% for message in messages %} -->
+                  {{ error_message }}
+                 <!-- {% endfor %} -->
+                {% endif %}
+              </p>
+        </div>
+      </div>
+      
+    </body>
+</html>
