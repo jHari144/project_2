@@ -19,4 +19,6 @@ urlpatterns = [
     path('search_user/', views.search_user, name='search_user'),
     path('search_detail/', views.search_detail, name='search_detail'),
     path('search/', views.call_search, name='search'),
+#    path('register/',views.fun,name="regis"),
+    path('register/',views.successregis, name="regis"),
 ]

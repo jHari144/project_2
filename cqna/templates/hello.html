@@ -4,34 +4,38 @@
         {% load static %}
         <link rel="stylesheet" href="{% static 'cqna/style.css' %}"/>
         <link rel="icon" href="{% static 'cqna/maxresdefault.jpg' %}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand&family=Unbounded&display=swap" rel="stylesheet">
     </head>
-    <body>
-        <img src="{%static 'cqna/maxresdefault.jpg'%}" width="700" height="300"/>
-       <div class="container">
-        <div class="login-box">
+    <body style="font-family: 'Quicksand', sans-serif; background-color: #ffffff;">
+        <br/><br/><br/><br/><br/><br/>
+        <div class="page">
+        <img src="{%static 'cqna/maxresdefault.jpg'%}" width="700" height="300"/><br/></div>
+        <div class="page">
+        <div class="login-box page">
             <form class="login" action="{% url 'cqna:index' %}" method='POST' >
                 {% csrf_token %}
-                    <div class="form-group">
+                    <div class="form-group page">
                         <input type="text" placeholder="UserID" name="num1" class="form-control">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group page">
                         <input type="password" placeholder="password" name="num2" class="form-control">
                     </div>
-                    <button type="submit" class="full btn">
+                    {% if error_message %}
+                    <p style="color: red;">{{ error_message }}</p>
+                   {% endif %}
+                    <div class="page">
+                    <button class="button" type="submit" class="full btn">
                         Login
-                    </button>
+                    </button></div>
                     <div class="form-group">
-                        <p> Don't have an account? <a href="register"> SignUp</a></p>
+                        <p> Don't have an account? <br/> <a class="page" href="register"> SignUp</a></p>
                     </div>
                     <!-- formaction="http://localhost:8000/home" -->
-            </form>
-            <p>
-                {% if error_message %}
-                 <!-- {% for message in messages %} -->
-                  {{ error_message }}
-                 <!-- {% endfor %} -->
-                {% endif %}
-              </p>
+            </form><br/>
+            <!-- <div class="page"> -->
+
         </div>
       </div>
       

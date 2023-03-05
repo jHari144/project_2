@@ -52,7 +52,6 @@ def index(request):
             # print("kalu2")
             val = request.POST.get('num1')
             va = request.POST.get('num2')
-            print(val, va)
             if not val:
                 error_message = 'Please enter user_id.'
                 # print(error_message)
@@ -61,13 +60,14 @@ def index(request):
                 # print(error_message)
             else:
                 try:
+                    val = int(val)
                     cursor = connection.cursor()
                     cursor.execute('''select password from users where id=%s'''%(val))
                     pas = cursor.fetchall()
                     cursor.close()
                     if pas:
                         pas = pas[0][0]
-                        print(pas)
+                        # print(pas)
                         request.session['user_id'] = val
                         response= redirect("cqna:user_posts")
                         response.set_cookie("UserID",val)
@@ -83,8 +83,8 @@ def index(request):
                     error_message = 'Invalid number entered.'
             context = {'error_message': error_message}
         else:
-            # print("kalu3")
             context = {}
+        # print(context)
         return render(request, 'hello.html', context)
 
 
@@ -124,9 +124,79 @@ def index(request):
 #         context = {}
 #     return render(request, 'cqna/index.html', context)
 
+def fun(request):
+ if 'login_status' in request.COOKIES and 'UserID' in request.COOKIES:
+    print("*???")
+    return redirect("home")
+ else:
+    return render(request,'wait.html')
+
+# def successregis(request):
+#     if 'login_status' in request.COOKIES and 'UserID' in request.COOKIES:
+#         print("*???")
+#         return redirect("home")
+#     else:
+#         if request.method == 'POST':
+#             try:
+#                 UserName = request.POST.get('')
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def successregis(request):
+    if 'login_status' in request.COOKIES and 'UserID' in request.COOKIES:
+        print("*???")
+        return redirect("home")
+    else:
+        if request.method == 'POST':
+            try:
+                UserName = request.POST.get('UserName')
+                print(UserName)
+                #val2=request.POST['num2']
+                Location = request.POST.get('Location')
+                print(Location)
+                WrbUrl = request.POST.get('WrbUrl')
+                print(WrbUrl)
+                AboutMe = request.POST.get('AboutMe')
+                print(AboutMe)
+                password = request.POST.get('password')
+                print(password)
+                if password == '':
+                    message = 'Please Fill the password'
+                    context = {'message': message}
+                    #messages.success(request,("Invalid Details"))
+                    return render(request, "wait.html", context)
+                else:    
+                    #val7=request.POST['num7']
+                    #print(val7)
+                    
+                    # now=datetime.datetime.now()
+                    now = timezone.localtime(timezone.now())
+                    print(now)
+        #here the real problem was '%s'
+                    cursor=connection.cursor()
+                    cursor.execute('''insert into users (display_name, reputation, location, website_url, about_me, creation_date, last_access_date, password) values(%s, 0, %s, %s, %s, %s, %s, %s) ''', [UserName, Location, WrbUrl, AboutMe, now, now, password])
+                    transaction.commit()
+                    cursor.execute('''select last_value from users_id_seq''')
+                    value=cursor.fetchall()
+
+                    context={
+                        'UserID': value[0][0],
+                        'password': password
+                    }
+                    print(value[0][0], password)
+                    cursor.close()
+                    return render(request, 'success.html', context)
+            except Exception:
+                message = 'Invalid Details'
+                context = {'message': message}
+                #messages.success(request,("Invalid Details"))
+                return render(request, "wait.html", context)
+        else:
+            return render(request, 'wait.html')
+
 def user_posts(request):
     user_id = request.session.get('user_id')
-    if request.session.get('logged_in'):
+    # if request.session.get('logged_in'):
+    if 'login_status' in request.COOKIES and 'UserID' in request.COOKIES:
         cursor = connection.cursor()
         cursor.execute(''' select title from posts where owner_user_id = %s and post_type_id = 1 order by creation_date desc'''%(user_id))
         val = cursor.fetchall()
@@ -288,7 +358,7 @@ def create_post(request):
 def search_tag_in(tags):
     if len(tags) != 0:
         cursor = connection.cursor()
-        cursor.execute(''' select tags from posts order by creation_date desc ''')
+        cursor.execute(''' select tags from posts where post_type_id = 1 order by creation_date desc, score desc ''')
         rset_tags = cursor.fetchall()
         tags_arr = []
         for a in rset_tags:
@@ -302,7 +372,7 @@ def search_tag_in(tags):
             else:
                 n_tags_arr.append(None)
 
-        cursor.execute(''' select id from posts order by creation_date desc ''')
+        cursor.execute(''' select id from posts where post_type_id = 1 order by creation_date desc, score desc ''')
         rset_id = cursor.fetchall()
     
         id_arr = []
@@ -310,7 +380,7 @@ def search_tag_in(tags):
         for a in rset_id:
             id_arr.append(a[0])
 
-        cursor.execute(''' select count(*) from posts ''')
+        cursor.execute(''' select count(*) from posts where post_type_id = 1 ''')
         count = cursor.fetchall()[0][0]
     
         pos_count = list(range(count))
@@ -327,7 +397,7 @@ def search_tag_in(tags):
                             pos_count.append(i)
             n_pos = []
 
-        cursor.execute(''' select title from posts order by creation_date desc ''')
+        cursor.execute(''' select title from posts where post_type_id = 1 order by creation_date desc, score desc ''')
         rset_title = cursor.fetchall()
         title_arr = []
         for a in rset_title:
@@ -417,32 +487,38 @@ def search_user(request):
     if request.session.get('logged_in'):
         if request.method == 'POST':
             s_user = request.POST.get('s_user')
-            cursor = connection.cursor()
-            cursor.execute(''' select id from users where id = %s ''', [s_user])
-            id_exist = cursor.fetchall()
-            if id_exist:
+            # print(s_user, 'hellalujash')
+            if s_user:
                 cursor = connection.cursor()
-                cursor.execute(''' select id from posts where owner_user_id = %s and post_type_id = 1 order by creation_date desc''', [s_user])
-                rset_id = cursor.fetchall()
-                rs_id = []
-                for a in rset_id:
-                    rs_id.append(a[0])
+                cursor.execute(''' select id from users where id = %s ''', [s_user])
+                id_exist = cursor.fetchall()
+                if id_exist:
+                    cursor = connection.cursor()
+                    cursor.execute(''' select id from posts where owner_user_id = %s and post_type_id = 1 order by creation_date desc, score desc ''', [s_user])
+                    rset_id = cursor.fetchall()
+                    rs_id = []
+                    for a in rset_id:
+                        rs_id.append(a[0])
 
-                cursor.execute(''' select title from posts where owner_user_id = %s and post_type_id = 1 order by creation_date desc ''', [s_user])
-                rset_title = cursor.fetchall()
-                rs_title = []
-                for a in rset_title:
-                    rs_title.append(a[0])
+                    cursor.execute(''' select title from posts where owner_user_id = %s and post_type_id = 1 order by creation_date desc, score desc ''', [s_user])
+                    rset_title = cursor.fetchall()
+                    rs_title = []
+                    for a in rset_title:
+                        rs_title.append(a[0])
 
-                id_title = []
-                i = 0
-                for a in rs_id:
-                    id_title.append([a, rs_title[i]])
-                    i += 1
+                    id_title = []
+                    i = 0
+                    for a in rs_id:
+                        id_title.append([a, rs_title[i]])
+                        i += 1
 
-                return search_detail(request, id_title, 2, s_user)
+                    return search_detail(request, id_title, 2, s_user)
+                else:
+                    error_message = 'Selected user does not exist!'
+                    context = {'error_message': error_message}
+                    return render(request, 'cqna/search_user.html', context)
             else:
-                error_message = 'Selected user does not exist!'
+                error_message = 'Select user!'
                 context = {'error_message': error_message}
                 return render(request, 'cqna/search_user.html', context)
         else:
@@ -577,6 +653,8 @@ def edit_tags(request, post_id):
                     except ValueError:
                         context = {'pre_tags': pre_tags}
                     return render(request, 'cqna/edit_tags.html', context)
+            elif 'cancel' in request.POST:
+                return detail(request, post_id)
             else:
                 context = {'pre_tags': pre_tags}
                 return render(request, 'cqna/edit_tags.html', context)

@@ -21,7 +21,7 @@
 		{% if message %}<p><strong style="color: red;">{{ message }}</strong></p>{% endif %}
 		<textarea cols="35" rows="8" name="post_text"></textarea><br/>
 		<div style="padding-left: 0px; padding-top: 20px;">
-			<input  type="submit" value="post" /> <a href="{% url 'cqna:index' %}"><input type="button" value="cancel"></a></div>
+			<input class="button" type="submit" value="post" /> <a href="{% url 'cqna:index' %}"><input class="button" type="button" value="cancel"></a></div>
 	</div>
 </form>
 </div>

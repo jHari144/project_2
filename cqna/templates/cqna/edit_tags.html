@@ -1,5 +1,18 @@
-	<div style="width: 400px; padding-left: 20px;">
-		<h3>Existing Tags</h3>
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'cqna/style.css' %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand&family=Unbounded&display=swap" rel="stylesheet">
+
+<div class="navigator">
+	<a class="navigator a" href="{% url 'cqna:logout' %}">Logout</a>
+	<a class="navigator a" href="{% url 'cqna:search' %}">Search</a>
+</div>
+
+ <div class="page"><!-- style="width: 400px; padding-left: 20px;"> -->
+		<h3>Existing Tags</h3></div>
+		<div class="page">
 		<p style="line-height: 1.8;">
 		{% if pre_tags %}
 		{% for t in pre_tags %}
@@ -9,17 +22,21 @@
 		</p></div>
 <form method="post">
 	{% csrf_token %}
-	<div style="padding-left: 20px; display: inline-block; vertical-align: top;">
-		<label for="tag" style="padding-right: 14px;">enter tag</formlabel>
+	<div class="page"><!-- style="padding-left: 20px; display: inline-block; vertical-align: top;">-->
+		<label for="tag" style="padding-right: 14px;">enter tag</label>
 			<input type="text" id="tag" name="tag"><br/>
-			<input type="submit" value="add" name="add">
-			<input type="submit" value="done"name="done">
+			<input class="button" type="submit" value="add" name="add">
+			<input class="button" type="submit" value="done"name="done">
+			<input class="button" type="submit" value="cancel" name="cancel">
+		</div><br/>
+		<div class="page" >
 			{% if error_message %}
 			<p style="color: red;">{{ error_message }}</p>
 			{% endif %}
 	</div>
-	<div style="width: 400px; padding-left: 20px; display: inline-block; vertical-align: top;">
-		<h3>Chosen Tags</h3>
+	<div class="page"><!-- </div> style="width: 400px; padding-left: 20px; display: inline-block; vertical-align: top;"> -->
+		<h3>Chosen Tags</h3></div>
+		<div class="page">
 		<p style="line-height: 1.8;">
 		{% if tags %}
 		{% for t in tags %}

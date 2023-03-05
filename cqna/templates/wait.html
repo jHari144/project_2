@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'cqna/style.css' %}"/>
+        <link rel="icon" href="{% static 'cqna/maxres2.png' %}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Quicksand&family=Unbounded&display=swap" rel="stylesheet">
+    </head>
+    <body style="font-family: 'Quicksand', sans-serif; background-color: #ffffff;">
+        <br/><br/><br/><br/><br/><br/>
+        <div class="page">
+        <img src="{%static 'cqna/maxres2.png'%}" width="100" height="100"/></div><br/>
+        <div class="page">
+        <div class="login-box">
+        <form class="login" method='post' >
+            {% csrf_token %}
+                <div class="form-group">
+                    <input type="text" placeholder="UserName" name="UserName" class="form-control">
+                </div><br/>
+<!--                <div class="form-group">
+                    <input type="text" placeholder="AccountID" name="num2" class="form-control">
+</div>-->
+                <div class="form-group">
+                    <input type="text" placeholder="Location" name="Location" class="form-control">
+                </div><br/>
+
+                    <div class="form-group">
+                        <input type="text" placeholder="Web URL" name="WrbUrl" class="form-control">
+                    </div><br/>
+                    <div class="form-group">
+                        <input type="text" placeholder="About Me" name="AboutMe" class="form-control">
+                    </div><br/>
+                    <div class="form-group">
+                    <input type="password" placeholder="password" name="password" class="form-control">
+                </div><br/>
+                <div class="form-group page">
+		<button class="button" type="submit">
+                    Register
+                </button></div>
+                <div class="page">
+                {% if message %}
+                <p style="color: red;">{{ message }}</p>
+               {% endif %}
+            </div>
+        </form><br/>    
+        </div>
+            <!-- <div class="page">
+            {% if message %}
+             <p style="color: red;">{{ message }}</p>
+            {% endif %}
+            </div> -->
+  </div>
+
+</body>
+</html>

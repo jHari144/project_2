@@ -26,6 +26,50 @@ p{
     line-height: 30px;
 }
 
+.login{
+    width: 99%;
+}
+
+.form-group
+{
+    margin-bottom: 10px;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+}
+
+input[type="text"].form-control{
+    font-size:16px;
+    border:2px solid #ccc;
+    outline:none;
+    width: calc(100%-36px);
+    padding: 16px;
+    border-radius: 5px;
+    }
+input[type="password"].form-control{
+    font-size:16px;
+    border:2px solid #ccc;
+    outline:none;
+    width: calc(100%-36x);
+    padding: 16px;
+    border-radius: 5px;
+    }
+    
+
+.login-box
+{
+background: white;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+position:relative;
+width: 400px;
+height:150px;
+font-size: 14px;
+border-radius: 5px;
+}
+
 .button{
     background-color: rgb(195, 129, 129);
     color: #172121;
@@ -72,6 +116,17 @@ p{
     display: flex; 
     justify-content: center;
 
+}
+
+.container
+{
+    margin-top: 175px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height:100%;
+    width: 100%;
 }
 
 .navigator{
