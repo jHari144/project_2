@@ -486,7 +486,7 @@ def search_tag(request):
 def search_user(request):
     if 'login_status' in request.COOKIES and 'UserID' in request.COOKIES:
         if request.method == 'POST':
-            s_user = request.POST.get('s_user')
+            s_user = int(request.POST.get('s_user'))
             # print(s_user, 'hellalujash')
             if s_user:
                 cursor = connection.cursor()
@@ -518,7 +518,7 @@ def search_user(request):
                     context = {'error_message': error_message}
                     return render(request, 'cqna/search_user.html', context)
             else:
-                error_message = 'Select user!'
+                error_message = 'Select user properly!'
                 context = {'error_message': error_message}
                 return render(request, 'cqna/search_user.html', context)
         else:

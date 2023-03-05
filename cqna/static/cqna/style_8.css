@@ -9,6 +9,7 @@ body{
 
 }
 h1{
+    font-size: 32px;
     font-family: 'Unbounded', cursive;
     /* text-transform: capitalize; */
     color:#57110cd0;
@@ -16,6 +17,7 @@ h1{
 }
 
 h2{
+    
     font-family: 'Unbounded', cursive;
     text-transform: capitalize;
     color:#172121;
@@ -90,12 +92,13 @@ border-radius: 5px;
     background-color: #fffff4;
     color: #172121;
     padding: 6px 12px;
+    margin: 4px;
     text-align:center;
     text-transform:capitalize;
     display:inline-block;
     /* border-radius: 3px; */
     border: 2px solid rgb(195, 129, 129);
-    font-size: 15px;
+    font-size: 24px;
     font-family: Quicksand;
     transition: width 0.4s height 0.4s font-size 0.4s;
 }
@@ -104,7 +107,7 @@ border-radius: 5px;
     background-color:rgb(195, 129, 129);
     transition: background-color 0.4s;
     color:white;
-    font-size: 15px;
+    /* font-size: 15px; */
     /* padding: 18px 36px; */
 }
 
@@ -123,7 +126,7 @@ border-radius: 5px;
 }
 
 .button2:hover{
-    background-color: #57110cd0;
+    background-color: #57110cf8;
     transition: background-color 0.3s;
     color:white;
     width: 110%;
@@ -197,11 +200,11 @@ border-radius: 5px;
     color:white;
 }
 
-textarea{
+textarea.content{
     display:block;
     margin-left:auto;
     margin-right:auto;
-    width: 50%;
+    width: 900px;
     height: 400px;
     padding: 12px 20px;
     box-sizing: border-box;
@@ -213,16 +216,34 @@ textarea{
     resize: none;
 }
 
+textarea.title{
+    display:block;
+    /* margin-left:auto; */
+    /* margin-right:auto; */
+    width: 750px;
+    height: 55px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    font-family: Unbounded;
+    font-size: 20px;
+    resize: none;
+}
+
 .tags{
     border: 1px solid #172121;
     border-radius: 5%;
     background-color:#fffff4 ;
+    font-size: 18px;
+    font-family:Quicksand;
     padding: 3px;
 }
 
 fieldset{
     display:block;
-    background-color: rgba(255,255,250,0.8);
+    background-color: rgba(255,255,250,1);
     margin-left: auto;
     margin-right: auto;
     width: 70%;
@@ -239,7 +260,7 @@ fieldset{
     display:inline-block;
     /* border-radius: 3px; */
     border: 2px solid rgb(195, 129, 129);
-    font-size: 15px;
+    font-size: 24px;
     font-family: Quicksand;
     transition: width 0.4s height 0.4s font-size 0.4s;
 }
@@ -248,7 +269,7 @@ fieldset{
     background-color:rgb(195, 129, 129);
     transition: background-color 0.4s;
     color:white;
-    font-size: 15px;
+    /* font-size: 15px; */
     /* padding: 18px 36px; */
 }
 
@@ -274,3 +295,14 @@ fieldset{
     font-size: 24px;
     /* padding: 18px 36px; */
 }
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.example::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+.example {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }

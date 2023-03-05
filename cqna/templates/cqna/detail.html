@@ -31,7 +31,7 @@
 	{% if is_owner %}
 	<a href="{% url 'cqna:edit_post' post_id %}"><input class="button3" type="button" value="Edit post"></a><a href="{% url 'cqna:delete_post' post_id %}"><input class="button3" type="button" value="Delete post"></a>
 	{% else %}
-	<a href="{% url 'cqna:reply' post_id %}"><input class="button3" type="button" value="reply" style="margin-right: 2px;"></a>
+	<a href="{% url 'cqna:reply' post_id %}"><input class="button3 page" type="button" value="reply" ></a>
 	{% endif %}
 </div>
 <div class="page"><p style="font-family: Unbounded; font-size: 17px;"><strong>Posted by:</strong> User_{{ u_id }} </p>
@@ -46,6 +46,6 @@
 </fieldset>
 {% endfor %}
 {% else %}
-No replies Yet!!
+<h4 style="text-align:center">No replies Yet!!</h4>
 {% endif %}
 </body>
