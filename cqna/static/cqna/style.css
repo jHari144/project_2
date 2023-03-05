@@ -12,7 +12,7 @@ h1{
 
 h2{
     font-family: 'Unbounded', cursive;
-    text-transform: capitalize;
+    /* text-transform: capitalize; */
     color:#172121;
 }
 

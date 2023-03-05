@@ -1,6 +1,6 @@
 {% load static %}
 
-<link rel="stylesheet" href="{% static 'cqna/style.css' %}">
+<link rel="stylesheet" href="{% static 'cqna/style_8.css' %}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Quicksand&family=Unbounded&display=swap" rel="stylesheet">
@@ -18,10 +18,10 @@
 	{% csrf_token %}
 	<h3>Post Title</h3>
 	{% if message %}<p><strong style="color: red;">{{ message }}</strong></p>{% endif %}
-	<textarea cols="25" rows="1" name="post_title">{{ title }}</textarea><br/>
+	<textarea class="title example" cols="25" rows="1" name="post_title">{{ title }}</textarea><br/>
 	<h3>Write post content below</h3>
 	{% if message %}<p><strong style="color: red;">{{ message }}</strong></p>{% endif %}
-	<textarea cols="35" rows="8" name="post_text">{{ body }}</textarea><br/>
+	<textarea class="content example" cols="35" rows="8" name="post_text">{{ body|safe }}</textarea><br/>
 	<div style="padding-left: 0px; padding-top: 20px;">
 	<input class="button" type="submit" value="post"/>
 	<a href="{% url 'cqna:detail' post_id %}"><input class="button" type="button" value="cancel"></a>

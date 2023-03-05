@@ -1,6 +1,6 @@
 {% load static %}
 
-<link rel="stylesheet" href="{% static 'cqna/style.css' %}">
+<link rel="stylesheet" href="{% static 'cqna/style_8.css' %}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Quicksand&family=Unbounded&display=swap" rel="stylesheet">
@@ -11,26 +11,27 @@
 </div>
 <br/><br/>
 
-<fieldset style="width: 1000px; display: inline-block; vertical-align: top;"> 
+<fieldset><!--  style="width: 1000px; display: inline-block; vertical-align: top;">  -->
 <legend><h3>{{ post_title }}</h3></legend>
 <div style="width: 1000px;"><p>{{ body|safe }}</p></div>
 </fieldset>
 
-<div style="width: 600px; display: inline-block; vertical-align: top; padding-left: 25px;">
-	<h4>Related Tags</h4>
+ <div class="page"><!--</div> style="width: 600px; display: inline-block; vertical-align: top; padding-left: 25px;"> -->
+	<h4>Related Tags</h4></div><div class="page">
 	{% if tags %}
 	{% for tag in tags %}
-	<span style="border: 1px solid black; white-space: nowrap; 		padding: 4px;">{{ tag }}</span>
+	<span class="tags">{{ tag }}</span>
 	{% endfor %}
 	{% endif %}
 </div>
 
 <form method="post">
 	{% csrf_token %}
-	<h3>Reply</h3>
+	<div class="page">
+	<h3>Reply</h3></div>
 	{% if message %} <p><strong style="color: red;">{{ message }}<strong></p> 
 	{% endif %}
-	<textarea cols="100" rows="5" name="reply_text"></textarea><br/fieldset>
-	<input class="button" type="submit" value="reply"/>
-	<a href="{% url 'cqna:detail' post_id %}"><input class="button" type="button" value="cancel"></a>
+	<textarea class="content example" name="reply_text"></textarea><br/fieldset>
+	<div class="page"> <input class="button" type="submit" value="reply"/>
+	<a href="{% url 'cqna:detail' post_id %}"><input class="button" type="button" value="cancel"></a></div>
 </form>

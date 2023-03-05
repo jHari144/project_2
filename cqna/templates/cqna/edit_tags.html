@@ -1,6 +1,6 @@
 {% load static %}
 
-<link rel="stylesheet" href="{% static 'cqna/style.css' %}">
+<link rel="stylesheet" href="{% static 'cqna/style_8.css' %}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Quicksand&family=Unbounded&display=swap" rel="stylesheet">
@@ -25,9 +25,9 @@
 	<div class="page"><!-- style="padding-left: 20px; display: inline-block; vertical-align: top;">-->
 		<label for="tag" style="padding-right: 14px;">enter tag</label>
 			<input type="text" id="tag" name="tag"><br/>
-			<input class="button" type="submit" value="add" name="add">
-			<input class="button" type="submit" value="done"name="done">
-			<input class="button" type="submit" value="cancel" name="cancel">
+			<input class="button3" type="submit" value="add" name="add">
+			<input class="button3" type="submit" value="done"name="done">
+			<input class="button3" type="submit" value="cancel" name="cancel">
 		</div><br/>
 		<div class="page" >
 			{% if error_message %}
@@ -39,8 +39,8 @@
 		<div class="page">
 		<p style="line-height: 1.8;">
 		{% if tags %}
-		{% for t in tags %}
-		<span style="border: 1px solid black; white-space: nowrap; padding: 3px;">{{ t }}</span>
+		{% for tag in tags %}
+		<span class="tags">{{ tag }}</span>
 		{% endfor %}
 		{% endif %}
 		</p></div>

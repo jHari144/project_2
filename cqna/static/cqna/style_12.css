@@ -1,0 +1,279 @@
+body{
+    font-family: 'Quicksand', sans-serif;
+    background-color: #fffff4;
+    background-image: url('bg.png');
+}
+
+.bold{
+    font-family:'Unbounded',cursive;
+
+}
+h1{
+    font-family: 'Unbounded', cursive;
+    /* text-transform: capitalize; */
+    color:#57110cd0;
+    text-align: center;
+}
+
+h2{
+    font-family: 'Unbounded', cursive;
+    text-transform: capitalize;
+    color:#172121;
+}
+
+h3{
+    font-family: 'Unbounded', cursive;
+    text-transform: capitalize;
+    color:#172121;
+}
+
+h4{
+    font-family: 'Unbounded', cursive;
+    text-transform: capitalize;
+    color:#172121;
+}
+
+p{
+    font-size: 18px;
+    color: #4a4a4a;
+    line-height: 30px;
+}
+
+.login{
+    width: 99%;
+}
+
+.form-group
+{
+    margin-bottom: 10px;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+}
+
+input[type="text"].form-control{
+    font-size:16px;
+    border:2px solid #ccc;
+    outline:none;
+    width: calc(100%-36px);
+    padding: 16px;
+    border-radius: 5px;
+    }
+input[type="password"].form-control{
+    font-size:16px;
+    border:2px solid #ccc;
+    outline:none;
+    width: calc(100%-36x);
+    padding: 16px;
+    border-radius: 5px;
+    }
+    
+
+.login-box
+{
+background: #fffff4;
+/* display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center; */
+font-family: Quicksand;
+position:relative;
+width: 400px;
+height:150px;
+font-size: 14px;
+border-radius: 5px;
+}
+
+.button{
+    background-color: #fffff4;
+    color: #172121;
+    padding: 6px 12px;
+    text-align:center;
+    text-transform:capitalize;
+    display:inline-block;
+    /* border-radius: 3px; */
+    border: 1px solid rgb(195, 129, 129);
+    font-size: 15px;
+    transition: width 0.4s height 0.4s font-size 0.4s;
+}
+
+.button:hover{
+    background-color:rgb(195, 129, 129);
+    transition: background-color 0.4s;
+    color:white;
+    font-size: 15px;
+    /* padding: 18px 36px; */
+}
+
+.button2{
+    background-color: white;
+    color:#172121;
+    padding: 20px 48px;
+    text-align: center;
+    text-transform:capitalize;
+    display: inline-block;
+    border-radius: 5px;
+    border:1.5px solid #57110cd0;
+    font-size: 20px;
+    transition: width 0.4s height 0.4s font-size 0.4s;
+}
+
+.button2:hover{
+    background-color: #57110cd0;
+    transition: background-color 0.4s;
+    color:white;
+    width: 110%;
+    height: 110%;
+}
+
+.page{
+    display: flex; 
+    justify-content: center;
+
+}
+
+.container
+{
+    margin-top: 175px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height:100%;
+    width: 100%;
+}
+
+.navigator{
+    display:inline-block;
+    /* height: 50px; */
+    justify-content: center;
+    /* position: absolute; */
+    /* top: 0px; */
+    /* left: 0; */
+    /* right: 0; */
+    background-color: #e3bd9c;
+}
+
+.navigator a{
+    color:#172121;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    border-radius: 0;
+    font-family:'Quicksand',sans-serif;
+}
+
+.navigator a:hover{
+    background-color:lightcoral;
+    color:white;
+}
+
+.navigatoropp{
+    display: inline-block;
+    width: 122.86px;
+    justify-content: center;
+    position: absolute;
+    top: 4px;
+    /* left: 0; */
+    right: 4px;
+    background-color: #e3bd9c;
+}
+
+.navigatoropp a{
+    color:#172121;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    border-radius: 0;
+    font-family:'Quicksand',sans-serif;
+}
+
+.navigatoropp a:hover{
+    background-color:lightcoral;
+    color:white;
+}
+
+textarea.content{
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
+    width: 900px;
+    height: 400px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    font-family: Quicksand;
+    font-size: 16px;
+    resize: none;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.example::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+.example {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+textarea.title{
+    display:block;
+    /* margin-left:auto; */
+    /* margin-right:auto; */
+    width: 750px;
+    height: 55px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    font-family: Unbounded;
+    font-size: 20px;
+    resize: none;
+}
+
+.tags{
+    border: 1px solid #172121;
+    border-radius: 5%;
+    background-color:#fffff4 ;
+    white-space: nowrap;
+    padding: 3px;
+}
+
+fieldset{
+    display:block;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgba(255,255,244,0.8);
+    width: 70%;
+}
+
+.button3{
+    margin-left:30px;
+    background-color: #fffff4;
+    color: #172121;
+    padding: 6px 12px;
+    text-align:center;
+    text-transform:capitalize;
+    display:inline-block;
+    /* border-radius: 3px; */
+    border: 1px solid rgb(195, 129, 129);
+    font-size: 15px;
+}
+
+.button3:hover{
+    background-color:rgb(195, 129, 129);
+    transition: background-color 0.25s;
+    color:white;
+    font-size: 15px;
+    /* padding: 18px 36px; */
+}
+
+.abc{
+    margin-top: 8.5%;
+    margin-bottom: auto;
+}

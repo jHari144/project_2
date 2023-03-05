@@ -2,16 +2,16 @@
 <html>
     <head>
         {% load static %}
-        <link rel="stylesheet" href="{% static 'cqna/style.css' %}"/>
-        <link rel="icon" href="{% static 'cqna/maxresdefault.jpg' %}">
+        <link rel="stylesheet" href="{% static 'cqna/style_8.css' %}"/>
+        <link rel="icon" href="{% static 'cqna/maxresdefault.png' %}">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Quicksand&family=Unbounded&display=swap" rel="stylesheet">
     </head>
-    <body style="font-family: 'Quicksand', sans-serif; background-color: #ffffff;">
+    <body>
         <br/><br/><br/><br/><br/><br/>
         <div class="page">
-        <img src="{%static 'cqna/maxresdefault.jpg'%}" width="700" height="300"/><br/></div>
+        <img src="{%static 'cqna/maxresdefault.png'%}" width="700" height="300"/><br/></div>
         <div class="page">
         <div class="login-box page">
             <form class="login" action="{% url 'cqna:index' %}" method='POST' >
@@ -30,7 +30,7 @@
                         Login
                     </button></div>
                     <div class="form-group">
-                        <p> Don't have an account? <br/> <a class="page" href="register"> SignUp</a></p>
+                        <p class="page"> Don't have an account? <br/> <a class="page" href="register"> SignUp</a></p>
                     </div>
                     <!-- formaction="http://localhost:8000/home" -->
             </form><br/>

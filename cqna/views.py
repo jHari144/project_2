@@ -4,6 +4,7 @@ from django.db import connection, transaction
 from django.utils import timezone
 from django.views.decorators.cache import cache_control
 from django.contrib import messages
+import re
 # Create your views here.
 
 # @cache_control(no_cache=True, must_revalidate=True, no_store=True)
@@ -68,12 +69,10 @@ def index(request):
                     if pas:
                         pas = pas[0][0]
                         # print(pas)
-                        request.session['user_id'] = val
                         response= redirect("cqna:user_posts")
                         response.set_cookie("UserID",val)
                         if va == pas:
                             response.set_cookie("login_status",True)
-                            request.session['logged_in'] = True
                             return response
                         else:
                             error_message = 'Invalid Password!!'
@@ -194,9 +193,9 @@ def successregis(request):
             return render(request, 'wait.html')
 
 def user_posts(request):
-    user_id = request.session.get('user_id')
     # if request.session.get('logged_in'):
     if 'login_status' in request.COOKIES and 'UserID' in request.COOKIES:
+        user_id = int(request.COOKIES['UserID'])
         cursor = connection.cursor()
         cursor.execute(''' select title from posts where owner_user_id = %s and post_type_id = 1 order by creation_date desc'''%(user_id))
         val = cursor.fetchall()
@@ -255,8 +254,9 @@ def tag_check(tag):
         return False
 
 def detail(request, post_id):
-    if request.session.get('logged_in'):
-        u_id = request.session.get('user_id')
+    if 'login_status' in request.COOKIES and 'UserID' in request.COOKIES:
+        u_id = int(request.COOKIES['UserID'])
+        # print(type(u_id))
         cursor = connection.cursor()
         cursor.execute(''' select owner_user_id from posts where id = %s ''', [post_id])
         owner_id = cursor.fetchall()[0][0]
@@ -297,8 +297,8 @@ def detail(request, post_id):
         return render(request, 'hello.html', context)
 
 def reply(request, post_id):
-    if request.session.get('logged_in'):
-        u_id = request.session.get('user_id')
+    if 'login_status' in request.COOKIES and 'UserID' in request.COOKIES:
+        u_id = int(request.COOKIES['UserID'])
         cursor = connection.cursor()
         reply=None
         cursor.execute(''' select title from posts where post_type_id = 1 and id = %s order by creation_date desc ''', [post_id])
@@ -332,11 +332,11 @@ def reply(request, post_id):
         return render(request, 'hello.html', context)
 
 def create_post(request):
-    if request.session.get('logged_in'): 
+    if 'login_status' in request.COOKIES and 'UserID' in request.COOKIES:
         if request.method == 'POST':
             if request.POST.get('post_title') and request.POST.get('post_text'):
                 request.session['tags'] = []
-                user_id = request.session.get('user_id')
+                user_id = int(request.COOKIES['UserID'])
                 post_title = request.POST.get('post_title')
                 post_body = request.POST.get('post_text')
                 post_body = '<p>' + post_body +'</p>'
@@ -413,7 +413,7 @@ def search_tag_in(tags):
         return []
 
 def search_tag(request):
-    if request.session.get('logged_in'):
+    if 'login_status' in request.COOKIES and 'UserID' in request.COOKIES:
         if request.method=='POST':
             if 'done' in request.POST:
                 if request.POST.get('tag') != '':
@@ -484,7 +484,7 @@ def search_tag(request):
         return render(request, 'hello.html', context)
 
 def search_user(request):
-    if request.session.get('logged_in'):
+    if 'login_status' in request.COOKIES and 'UserID' in request.COOKIES:
         if request.method == 'POST':
             s_user = request.POST.get('s_user')
             # print(s_user, 'hellalujash')
@@ -550,20 +550,28 @@ def search_detail(request, id_title, type, q):
 
 
 def call_search(request):
-    return render(request, 'cqna/search.html')
+    if 'login_status' in request.COOKIES and 'UserID' in request.COOKIES:
+        return render(request, 'cqna/search.html')
+    else:
+        context = {}
+        return render(request, 'hello.html', context)
 
 def edit_post(request, post_id):
-    if request.session.get('logged_in'):
+    if 'login_status' in request.COOKIES and 'UserID' in request.COOKIES:
         cursor = connection.cursor()
         cursor.execute(''' select title from posts where id = %s ''', [post_id])
         title = cursor.fetchall()[0][0]
         cursor.execute(''' select body from posts where id = %s ''', [post_id])
         body = cursor.fetchall()[0][0]
+        body = re.sub(r'<p>', '', body)
+        body = re.sub(r'</p>', '\n', body)
         cursor.close()
         if request.method == 'POST':
             if request.POST['post_title'] and request.POST['post_text']:
                 post_title = request.POST.get('post_title')
                 post_text = request.POST.get('post_text')
+                post_text = '<p>' + post_text +'</p>'
+                post_text = post_text.replace('\n', '</p><p>')
                 edit_time = timezone.localtime(timezone.now())
                 cursor = connection.cursor()
                 cursor.execute(''' update posts set title = %s, body = %s, last_edit_date = %s where id = %s ''', [post_title, post_text, edit_time, post_id])
@@ -581,12 +589,16 @@ def edit_post(request, post_id):
         return render(request, 'hello.html', context)
 
 def edit_tags(request, post_id):
-    if request.session.get('logged_in'):
+    if 'login_status' in request.COOKIES and 'UserID' in request.COOKIES:
         cursor = connection.cursor()
         cursor.execute(''' select tags from posts where id = %s ''', [post_id])
         pre_tags_str = cursor.fetchall()[0][0]
         cursor.close()
-        pre_tags = split_tags_list(pre_tags_str)
+        # print(pre_tags_str)
+        if pre_tags_str != None:
+            pre_tags = split_tags_list(pre_tags_str)
+        else:
+            pre_tags = None
         if request.method=='POST':
             if 'done' in request.POST:
                 if request.POST.get('tag') != '':
@@ -666,7 +678,7 @@ def edit_tags(request, post_id):
         return render(request, 'hello.html', context)
 
 def delete_post(request, post_id):
-    if request.session.get('logged_in'):
+    if 'login_status' in request.COOKIES and 'UserID' in request.COOKIES:
         cursor = connection.cursor()
         cursor.execute(''' delete from posts where id = %s ''', [post_id])
         transaction.commit()
@@ -677,7 +689,7 @@ def delete_post(request, post_id):
         return render(request, 'hello.html', context)
 
 def add_tags(request):
-    if request.session.get('logged_in'):
+    if 'login_status' in request.COOKIES and 'UserID' in request.COOKIES:
         if request.method=='POST':
             if 'done' in request.POST:
                 if request.POST.get('tag') != '':
@@ -756,9 +768,6 @@ def add_tags(request):
 
 
 def logout(request):
-    request.session['password'] = None
-    request.session['user_id'] = None
-    request.session['logged_in'] = False
     request.session['tags'] = []
     response=redirect('cqna:user_posts')
     response.delete_cookie('UserID')

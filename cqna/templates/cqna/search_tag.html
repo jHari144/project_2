@@ -1,6 +1,6 @@
 {% load static %}
 
-<link rel="stylesheet" href="{% static 'cqna/style.css' %}">
+<link rel="stylesheet" href="{% static 'cqna/style_8.css' %}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Quicksand&family=Unbounded&display=swap" rel="stylesheet">
@@ -11,7 +11,7 @@
 	<a class="navigator a" href="{% url 'cqna:search' %}">Search</a>
 </div>
 
-<form method="post">
+<form action="{% url 'cqna:search_tag' %}" method="post">
 {% csrf_token %}
 <div class="page"><!-- style="padding-left: 20px; display: inline-block; vertical-align: top;">-->
 	<label for="tag" style="padding-right: 14px;">enter tag</label>
@@ -25,10 +25,11 @@
 	{% endif %}
 </div><br/>
 <div class="page"><!-- style="width: 400px; padding-left: 20px; display: inlineine-block; vertical-align: top;"><p style="line-height: 1.8;">-->
+	<p style="line-height: 1.8;">
 	{% if tags %}
-	{% for t in tags %}
-	<span style="border: 1px solid black; white-space: nowrap; padding: 3px;">{{ t }}</span>
-	{% endfor %}
+		{% for t in tags %}
+			<span style="border: 1px solid black; white-space: nowrap; padding: 3px;">{{ t }}</span>
+		{% endfor %}
 	{% endif %}
 	</p></div>
 	</form>

@@ -1,9 +1,10 @@
 {% load static %}
 
-<link rel="stylesheet" href="{% static 'cqna/style.css' %}">
+<link rel="stylesheet" href="{% static 'cqna/style_8.css' %}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Quicksand&family=Unbounded&display=swap" rel="stylesheet">
+<body class="example">
 
 <div class="navigator">
 	<a class="navigator a" href="{% url 'cqna:user_posts' %}">Home</a>
@@ -11,33 +12,35 @@
 	<a class="navigator a" href="{% url 'cqna:search' %}">Search</a> 
 </div>
 <br/><br/>
-<div><p><strong>Owner_id:</strong> {{ u_id }} </p></div>
-<fieldset style="width: 1000px; display: inline-block; vertical-align: top;"> 
-	<legend><h3>{{ post_title }}</h3></legend>
+<fieldset><!--  style="width: 1000px; display: inline-block; vertical-align: top;">   -->
+	<legend style="text-align: center;"><h2>{{ post_title }}</h2></legend>
 	<div style="width: 1000px;"><p>{{ body|safe }}</p></div>
 </fieldset>
-<div style="width: 600px; display: inline-block; vertical-align: top; padding-left: 25px;">
-	<h4>Related Tags</h4>
+<div class="page">	<h4>Related Tags</h4><br/>
+</div>
+<div class="page"><!--  style="width: 90%; padding-left: 25px;"> -->
 	<p style="line-height: 1.8;">
 	{% if tags %}
 	{% for tag in tags %}
-		<span style="border: 1px solid black; white-space: nowrap; padding: 3px;">{{ tag }}</span>
+		<span class="tags"> {{ tag }}</span> <!-- style="border: 1px solid black; white-space: nowrap; padding: 3px;">{{ tag }}</span> -->
 	{% endfor %}
 	{% endif %}
 	</p></div>
-<div style="padding-top: 10px; padding-left: 3px;">
+	<!-- <div><p style="font-family: Unbounded; font-size: 17px;"><strong>Posted by:</strong> User_{{ u_id }} </p></div> -->
+	<div class="page"> <!-- style="padding-top: 10px; padding-left: 3px;"> -->
 	{% if is_owner %}
-	<a href="{% url 'cqna:edit_post' post_id %}"><input class="button" type="button" value="Edit post"></a>
-	<a href="{% url 'cqna:delete_post' post_id %}"><input class="button" type="button" value="Delete post"></a>
+	<a href="{% url 'cqna:edit_post' post_id %}"><input class="button3" type="button" value="Edit post"></a><a href="{% url 'cqna:delete_post' post_id %}"><input class="button3" type="button" value="Delete post"></a>
 	{% else %}
-	<a href="{% url 'cqna:reply' post_id %}"><input class="button" type="button" value="reply" style="margin-right: 2px;"></a>
+	<a href="{% url 'cqna:reply' post_id %}"><input class="button3" type="button" value="reply" style="margin-right: 2px;"></a>
 	{% endif %}
+</div>
+<div class="page"><p style="font-family: Unbounded; font-size: 17px;"><strong>Posted by:</strong> User_{{ u_id }} </p>
 </div><br/><br/>
-
-<h2>Replies</h2>
+<div class="page">
+<h2>Replies</h2></div>
 {% if Replies %}
 {% for row in Replies %}
-<fieldset style="width: 1000px; display: inline-block;">
+<fieldset><!--  style="width: 1000px; display: inline-block;"> -->
 	<legend><h3>user_{{ row.0 }}</h3></legend>
 	<div style="width: 1300px;">{{ row.1|safe }}</div>
 </fieldset>
@@ -45,3 +48,4 @@
 {% else %}
 No replies Yet!!
 {% endif %}
+</body>

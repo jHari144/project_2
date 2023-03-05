@@ -1,9 +1,10 @@
 {% load static %}
 
-<link rel="stylesheet" href="{% static 'cqna/style.css' %}">
+<link rel="stylesheet" href="{% static 'cqna/style_8.css' %}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Quicksand&family=Unbounded&display=swap" rel="stylesheet">
+<body class="example">
 
 <div class="navigator">
 	<a class="navigator a" href="{% url 'cqna:user_posts' %}">Home</a>
@@ -37,3 +38,4 @@
 <p>{{ message }}</p>
 {% endif %}
 
+</body>
