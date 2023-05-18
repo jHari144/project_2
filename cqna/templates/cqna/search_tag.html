@@ -1,4 +1,4 @@
-{% load static %}
+<!-- {% load static %}
 
 <link rel="stylesheet" href="{% static 'cqna/style_8.css' %}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +13,7 @@
 
 <form action="{% url 'cqna:search_tag' %}" method="post">
 {% csrf_token %}
-<div class="page"><!-- style="padding-left: 20px; display: inline-block; vertical-align: top;">-->
+<div class="page"> style="padding-left: 20px; display: inline-block; vertical-align: top;">
 	<label for="tag" style="padding-right: 14px;">enter tag</label>
 		<input type="text" id="tag" name="tag"><br/>
 		<input class="button" type="submit" value="add" name="add">
@@ -24,7 +24,7 @@
 	<p style="color: red;">{{ error_message }}</p>
 	{% endif %}
 </div><br/>
-<div class="page"><!-- style="width: 400px; padding-left: 20px; display: inlineine-block; vertical-align: top;"><p style="line-height: 1.8;">-->
+<div class="page style="width: 400px; padding-left: 20px; display: inlineine-block; vertical-align: top;"><p style="line-height: 1.8
 	<p style="line-height: 1.8;">
 	{% if tags %}
 		{% for t in tags %}
@@ -32,5 +32,89 @@
 		{% endfor %}
 	{% endif %}
 	</p></div>
-	</form>
+	</form> -->
+
+	{% load static %}
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+	<link rel="stylesheet" href="{% static 'cqna/style_8.css' %}">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Quicksand&family=Unbounded&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://unpkg.com/@trevoreyre/autocomplete-js/dist/style.css"/>
+	<script src="https://unpkg.com/@trevoreyre/autocomplete-js"> </script>
+	</head>
+	<body>
+	<div class="navigator">
+		<a class="navigator a" href="{% url 'cqna:user_posts' %}">Home</a>
+		<a class="navigator a" href="{% url 'cqna:logout' %}">Logout</a>
+		<a class="navigator a" href="{% url 'cqna:search' %}">Search</a>
+	</div>
+	
+	
+	
+	
+	
+	<div class="container">
+			<label for="user_id">enter tags</label>
+			<div id="autocomplete" class="autocomplete">
+				<input class="autocomplete-input" name="s_user">
+				
+				<ul class="autocomplete-result-list"></ul>
+			  </div>
+			  <form action="/cqna/search_tag/" method='post'>
+				{% csrf_token %}
+				<input type="hidden" id="taggg" name="taggg"><br/>
+				<input class="button" type="submit" value="add" name="add_now">
+				<input class="button" type="submit" value="done"name="done_now"><br/>
+				<!-- {% if error_message %}
+				<p style="color: red;">{{ error_message }}</p>
+				{% endif %} -->
+				<div class="page" >
+					{% if error_message %}
+					<p style="color: red;">{{ error_message }}</p>
+					{% endif %}
+				</div><br/> 
+				<div class="page"><!--style="width: 400px; padding-left: 20px; display: inlineine-block; vertical-align: top;"><p style="line-height: 1.8;">-->
+					{% if tags %}
+					{% for t in tags %}
+					<span style="border: 1px solid black; white-space: nowrap; padding: 3px;">{{ t }}</span>
+					{% endfor %}
+					{% endif %}
+					</p></div>
+				
+			</form>
+	<script>
+		new Autocomplete('#autocomplete', {
+			search: input => {
+			  console.log(input)
+			  const encodedInput = encodeURIComponent(input);
+			  const url=`/cqna/tag_search/?search=${encodedInput}`
+			  console.log(url)
+			  return new Promise(resolve =>{
+				fetch(url)
+				.then(response=>response.json())
+				.then(data =>{
+					console.log(data.payload)
+					resolve(data.payload)
+				})
+			  })
+			},
+		onSubmit: result => {
+		// window.open(`/search_user/?s_user=${result}`)
+				var input_value=document.getElementById('taggg');
+				input_value.value=result
+	// var suubmit_button = document.getElementById('submitbut');
+	// suubmit_button.click()
+	}
+		})
+
+		
+	</script>
+	</div>
+	
+	</body>
+	
+	</html>
 

@@ -21,4 +21,9 @@ urlpatterns = [
     path('search/', views.call_search, name='search'),
 #    path('register/',views.fun,name="regis"),
     path('register/',views.successregis, name="regis"),
+    path('auto/',views.auto),
+    path('tag_search/',views.tag_search),
+    path('search_tag/', views.search_tag,name='done_now'),
+    path('search_tag/', views.search_tag,name='add_now'),
+
 ]

@@ -1,4 +1,4 @@
-{% load static %}
+<!-- {% load static %}
 
 <link rel="stylesheet" href="{% static 'cqna/style_8.css' %}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,4 +22,68 @@
 	{% if error_message %}
 	<p style="color: red;">{{ error_message }}</p>
 	{% endif %}</div>
-</form>
+</form> -->
+
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" href="https://unpkg.com/@trevoreyre/autocomplete-js/dist/style.css"/>
+    <link rel="stylesheet" href="{% static 'cqna/style_8.css' %}">
+    <script src="https://unpkg.com/@trevoreyre/autocomplete-js"> </script>
+</head>
+<body>
+	
+	<div class="navigator">
+		<a class="navigator a" href="{% url 'cqna:user_posts' %}">Home</a>
+		<a class="navigator a" href="{% url 'cqna:logout' %}">Logout</a>
+		<a class="navigator a" href="{% url 'cqna:search' %}">Search</a>
+	</div>
+
+	
+		<div class="container">
+		<label for="user_id"><h2>UserID</h2></label>
+		<div id="autocomplete" class="autocomplete">
+			<input class="autocomplete-input" name="s_user">
+			
+			<ul class="autocomplete-result-list"></ul>
+		  </div>
+		  <form action="/cqna/search_user/" method='post'>
+			{% csrf_token %}
+			<input type="hidden" id="user_id" name="s_user">
+			<input class="button" type="submit" value="search" name="search_user" id="submitbut"><div class="page">
+			{% if error_message %}
+			<p style="color: red;">{{ error_message }}</p>
+			{% endif %}</div>
+		</form>
+<script style="font-family:Quicksand;">
+    new Autocomplete('#autocomplete', {
+        search: input => {
+          console.log(input)
+		  const url=`/cqna/auto/?search=${input}`
+		  return new Promise(resolve =>{
+			fetch(url)
+			.then(response=>response.json())
+			.then(data =>{
+				console.log(data.payload)
+				resolve(data.payload)
+			})
+		  })
+        },
+	onSubmit: result => {
+    // window.open(`/search_user/?s_user=${result}`)
+			var input_value=document.getElementById('user_id');
+           input_value.value=result
+// var suubmit_button = document.getElementById('submitbut');
+// suubmit_button.click()
+}
+    })
+</script>
+</div>
+
+
+
+
+</body>
+</html>

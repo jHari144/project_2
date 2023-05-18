@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.views.decorators.cache import cache_control
 from django.contrib import messages
 import re
+from django.http import JsonResponse
 # Create your views here.
 
 # @cache_control(no_cache=True, must_revalidate=True, no_store=True)
@@ -415,11 +416,11 @@ def search_tag_in(tags):
 def search_tag(request):
     if 'login_status' in request.COOKIES and 'UserID' in request.COOKIES:
         if request.method=='POST':
-            if 'done' in request.POST:
-                if request.POST.get('tag') != '':
+            if 'done_now' in request.POST:
+                if request.POST.get('taggg') != '':
                     try:
                         tags = request.session.get('tags')
-                        tag = request.POST.get('tag', '').strip()
+                        tag = request.POST.get('taggg', '').strip()
                         if tag_check(tag) and tag not in tags:
                             tags.append(tag)
                             request.session['tags'] = []
@@ -438,20 +439,20 @@ def search_tag(request):
                         tags = request.session.get('tags')
                         request.session['tags'] = []
                         id_title = search_tag_in(tags)
-                        if len(id_title) != 0:
-                            return search_detail(request, id_title, 1, tags)
-                        else:
-                            error_message = 'Select tag!'
-                            context = {'error_message': error_message, 'tags': tags}
-                        #return search_detail(request, id_title, 1, tags)
+                        
+                        return search_detail(request, id_title, 1, tags)
+                        # else:
+                        #     error_message = 'Select tag!'
+                        #     context = {'error_message': error_message, 'tags': tags}
+                        # #return search_detail(request, id_title, 1, tags)
                     except ValueError:
                         context = {}
                 return render(request, 'cqna/search_tag.html', context)
-            elif 'add' in request.POST:
+            elif 'add_now' in request.POST:
                 if request.POST.get('tag') != '':
                     try:
                         tags = request.session.get('tags')
-                        tag = request.POST.get('tag', '').strip()
+                        tag = request.POST.get('taggg', '').strip()
                         if tag_check(tag) and tag not in tags:
                             tags.append(tag)
                             context={'tags': tags}
@@ -486,8 +487,9 @@ def search_tag(request):
 def search_user(request):
     if 'login_status' in request.COOKIES and 'UserID' in request.COOKIES:
         if request.method == 'POST':
-            s_user = int(request.POST.get('s_user'))
+            s_user = request.POST.get('s_user')
             # print(s_user, 'hellalujash')
+            print(s_user)
             if s_user:
                 cursor = connection.cursor()
                 cursor.execute(''' select id from users where id = %s ''', [s_user])
@@ -773,3 +775,62 @@ def logout(request):
     response.delete_cookie('UserID')
     response.delete_cookie('login_status')
     return response
+
+def auto(request):
+   search=request.GET.get('search')
+   #space being removed by js not in case 30 30
+   #print(search.isspace())
+   payload=[]
+   if search:
+    search="%"+search+"%"
+    payload=[]
+    print("*********************")
+    if search:
+     cursor=connection.cursor()
+     #= not works but like works
+     print(search)
+     cursor.execute('''select id from users where CAST(id AS TEXT) like %s order by id asc limit 10 ''',[search])
+     out=cursor.fetchall()
+     if len(out)!=0:
+      for i in range(0,len(out)):
+        payload.append(out[i][0])
+     return JsonResponse({
+        'status': True,
+        'payload':payload
+     })
+   else:
+    return JsonResponse({
+        'status': True,
+        'payload':payload
+     })
+
+
+def tag_search(request):
+   print("TAGS")
+   search=request.GET.get('search')
+   print(search)
+   #space being removed by js not in case 30 30
+   #print(search.isspace())
+   payload=[]
+   if search:
+    search="%"+search+"%"
+    payload=[]
+    print("*********************")
+    if search:
+     cursor=connection.cursor()
+     #= not works but like works
+     print(search)
+     cursor.execute('''select tag_name from tags where tag_name like %s  ''',[search])
+     out=cursor.fetchall()
+     if len(out)!=0:
+      for i in range(0,len(out)):
+        payload.append(out[i][0])
+     return JsonResponse({
+        'status': True,
+        'payload':payload
+     })
+   else:
+    return JsonResponse({
+        'status': True,
+        'payload':payload
+     })

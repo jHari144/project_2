@@ -17,13 +17,14 @@ h1{
 }
 
 h2{
-    
+    font-size:19.65px;
     font-family: 'Unbounded', cursive;
     text-transform: capitalize;
     color:#172121;
 }
 
 h3{
+    font-size:12.07px;
     font-family: 'Unbounded', cursive;
     text-transform: capitalize;
     color:#172121;
@@ -37,7 +38,7 @@ h4{
 
 p{
     font-size: 18px;
-    color: #4a4a4a;
+    color: #172121;
     line-height: 30px;
 }
 
@@ -91,7 +92,7 @@ border-radius: 5px;
 .button{
     background-color: #fffff4;
     color: #172121;
-    padding: 6px 12px;
+    padding: 6px 6px;
     margin: 4px;
     text-align:center;
     text-transform:capitalize;
@@ -119,14 +120,14 @@ border-radius: 5px;
     text-transform:capitalize;
     display: inline-block;
     border-radius: 5px;
-    border:1.5px solid #57110cd0;
+    border:1.5px solid #57110c;
     font-size: 20px;
     font-family: Quicksand;
     transition: width 0.4s height 0.4s font-size 0.4s;
 }
 
 .button2:hover{
-    background-color: #57110cf8;
+    background-color: #57110c;
     transition: background-color 0.3s;
     color:white;
     width: 110%;
@@ -146,6 +147,7 @@ border-radius: 5px;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    font-family: Quicksand;
     height:100%;
     width: 100%;
 }
@@ -254,7 +256,7 @@ fieldset{
     /* margin-left:30px; */
     background-color: #fffff4;
     color: #172121;
-    padding: 6px 12px;
+    padding: 6px 6px;
     text-align:center;
     text-transform:capitalize;
     display:inline-block;
